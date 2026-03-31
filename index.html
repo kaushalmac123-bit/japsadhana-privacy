@@ -1,0 +1,234 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Jaap Sadhana Privacy Policy</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #1e1b4b;
+            --accent: #facc15;
+
+            --bg: radial-gradient(circle at top, #0f172a, #020617);
+            --glass: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.08);
+
+            --text: #f1f5f9;
+            --dim: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ✨ Floating Particles BG */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 80px 20px;
+        }
+
+        /* Header */
+        h1 {
+            font-family: 'Outfit';
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #c7d2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub {
+            text-align: center;
+            color: var(--dim);
+            margin-bottom: 50px;
+        }
+
+        /* Glass Card */
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            transition: 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Titles */
+        h2 {
+            font-family: 'Outfit';
+            margin-bottom: 15px;
+            color: #818cf8;
+        }
+
+        /* Text */
+        p {
+            color: var(--dim);
+            margin-bottom: 12px;
+        }
+
+        ul {
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: var(--dim);
+        }
+
+        /* Scroll Animation */
+        .hidden {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+            transition: 1s ease;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <canvas id="bg"></canvas>
+
+    <div class="container">
+
+        <h1>Privacy Policy</h1>
+        <p class="sub">Jaap Sadhana • Spiritual Companion App</p>
+
+        <div class="card hidden">
+            <h2>1. Introduction</h2>
+            <p>Jaap Sadhana is designed as a spiritual platform to support meditation and mantra chanting. We respect
+                your privacy and ensure a secure experience.</p>
+        </div>
+
+        <div class="card hidden">
+            <h2>2. Data We Collect</h2>
+            <ul>
+                <li>User profile (name, email)</li>
+                <li>Jaap logs and statistics</li>
+                <li>Device information</li>
+                <li>App preferences</li>
+            </ul>
+        </div>
+
+        <div class="card hidden">
+            <h2>3. How We Use Data</h2>
+            <p>We use your data to enhance your spiritual journey, provide analytics, and maintain app functionality.
+            </p>
+        </div>
+
+        <div class="card hidden">
+            <h2>4. Data Storage</h2>
+            <p>Data is stored securely using Supabase and Firebase services.</p>
+        </div>
+
+        <div class="card hidden">
+            <h2>5. Privacy Controls</h2>
+            <p>You can control leaderboard visibility and manage your personal data.</p>
+        </div>
+
+        <div class="card hidden">
+            <h2>6. Security</h2>
+            <p>We use secure authentication and encryption practices to protect your data.</p>
+        </div>
+
+        <div class="card hidden">
+            <h2>7. Contact</h2>
+            <p>Email: dev2applitz2020@gmail.com</p>
+        </div>
+
+    </div>
+
+    <script>
+        // ✨ Floating particles
+        const canvas = document.getElementById("bg");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+
+        for (let i = 0; i < 60; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 2,
+                dx: (Math.random() - 0.5) * 0.5,
+                dy: (Math.random() - 0.5) * 0.5
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(99,102,241,0.4)";
+
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fill();
+
+                p.x += p.dx;
+                p.y += p.dy;
+
+                if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+            });
+
+            requestAnimationFrame(draw);
+        }
+        draw();
+
+        // Scroll reveal
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add("show");
+                }
+            });
+        });
+
+        document.querySelectorAll(".hidden").forEach(el => observer.observe(el));
+
+    </script>
+
+</body>
+
+</html>
