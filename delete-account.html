@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jaap Sadhana | Account Deletion & Restoration</title>
+    <meta
+      name="description"
+      content="Official Account Deletion and data restoration policy for Jaap Sadhana."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #6366f1;
+        --primary-glow: rgba(99, 102, 241, 0.5);
+        --accent: #facc15;
+        --accent-glow: rgba(250, 204, 21, 0.4);
+        --bg: #020617;
+        --card-bg: rgba(255, 255, 255, 0.03);
+        --card-border: rgba(255, 255, 255, 0.08);
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+        --nav-bg: rgba(2, 6, 23, 0.8);
+        --danger: #ef4444;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--bg);
+        background-image:
+          radial-gradient(
+            circle at 0% 0%,
+            rgba(99, 102, 241, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 100% 100%,
+            rgba(147, 51, 234, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(250, 204, 21, 0.05) 0%,
+            transparent 50%
+          );
+        color: var(--text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* 🌌 BACKGROUND ANIMATIONS */
+      .bg-elements {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.4;
+        animation: move 20s infinite alternate ease-in-out;
+      }
+
+      .blob-1 {
+        width: 500px;
+        height: 500px;
+        background: var(--primary);
+        top: -10%;
+        left: -5%;
+      }
+      .blob-2 {
+        width: 400px;
+        height: 400px;
+        background: #9333ea;
+        bottom: -10%;
+        right: -5%;
+        animation-delay: -5s;
+      }
+      .blob-3 {
+        width: 300px;
+        height: 300px;
+        background: var(--accent);
+        top: 40%;
+        right: 10%;
+        animation-delay: -10s;
+      }
+
+      @keyframes move {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        100% {
+          transform: translate(50px, 100px) scale(1.1);
+        }
+      }
+
+      canvas#particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.3;
+      }
+
+      /* 📱 NAVIGATION */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px 0;
+        background: var(--nav-bg);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--card-border);
+        z-index: 1000;
+      }
+
+      .nav-content {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 24px;
+      }
+
+      .logo {
+        font-family: "Outfit", sans-serif;
+        font-size: 24px;
+        font-weight: 800;
+        background: linear-gradient(90deg, #fff, var(--primary));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 24px;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--text-primary);
+      }
+
+      /* 📄 MAIN CONTENT */
+      main {
+        max-width: 900px;
+        margin: 120px auto 80px;
+        padding: 0 24px;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 80px;
+      }
+
+      h1 {
+        font-family: "Outfit", sans-serif;
+        font-size: clamp(40px, 8vw, 64px);
+        font-weight: 800;
+        margin-bottom: 16px;
+        letter-spacing: -2px;
+        background: linear-gradient(90deg, #fff, #c7d2fe);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .last-updated {
+        color: var(--text-muted);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      /* 🧩 SECTIONS */
+      section {
+        margin-bottom: 40px;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 24px;
+        padding: 40px;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        opacity: 0.5;
+      }
+
+      .card.danger::before {
+        background: linear-gradient(90deg, var(--danger), #991b1b);
+      }
+
+      h2 {
+        font-family: "Outfit", sans-serif;
+        font-size: 28px;
+        margin-bottom: 24px;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      p {
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+        font-size: 16px;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      ul li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: 12px;
+        color: var(--text-secondary);
+      }
+
+      ul li::before {
+        content: "✦";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        text-shadow: 0 0 8px var(--accent-glow);
+      }
+
+      .important-box {
+        background: rgba(239, 68, 68, 0.1);
+        border-left: 4px solid var(--danger);
+        padding: 24px;
+        border-radius: 0 16px 16px 0;
+        margin: 24px 0;
+      }
+
+      .important-box h4 {
+        color: var(--danger);
+        margin-bottom: 8px;
+        font-size: 18px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 40px 0;
+        color: var(--text-muted);
+        font-size: 14px;
+        border-top: 1px solid var(--card-border);
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      @media screen and (max-width: 600px) {
+        main {
+          margin-top: 100px;
+          padding: 0 16px;
+        }
+        .card {
+          padding: 24px;
+        }
+        h1 {
+          font-size: 36px;
+        }
+        .nav-links {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="bg-elements">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+    <canvas id="particles"></canvas>
+
+    <nav>
+      <div class="nav-content">
+        <a href="index.html" class="logo">
+          <svg width="32" height="32" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color: #fde047; stop-opacity: 1" />
+                <stop offset="50%" style="stop-color: #eab308; stop-opacity: 1" />
+                <stop offset="100%" style="stop-color: #854d0e; stop-opacity: 1" />
+              </linearGradient>
+            </defs>
+            <text
+              x="50%"
+              y="65%"
+              dominant-baseline="middle"
+              text-anchor="middle"
+              font-family="'Inter', sans-serif"
+              font-weight="900"
+              font-size="70"
+              fill="url(#goldGrad)"
+              style="filter: drop-shadow(0 0 5px rgba(234, 179, 8, 0.5))"
+            >
+              ॐ
+            </text>
+          </svg>
+          Jaap Sadhana
+        </a>
+        <div class="nav-links">
+          <a href="index.html">Privacy Policy</a>
+          <a href="#process">Process</a>
+          <a href="#restoration">Restoration</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <header>
+        <h1>Account Deletion</h1>
+        <p class="last-updated">Effective Date: April 6, 2026</p>
+      </header>
+
+      <section id="policy" class="card">
+        <h2>Your Right to Privacy</h2>
+        <p>
+          At <strong>Jaap Sadhana</strong>, we believe you should have absolute control over your spiritual data. We provide a transparent and straightforward way to delete your account and all associated records.
+        </p>
+        <p>
+          Whether you choose to move on or restart your journey, we ensure your data is handled with the same sanctity it was recorded with.
+        </p>
+      </section>
+
+      <section id="process" class="card danger">
+        <h2>How to Initiate Deletion</h2>
+        <div class="important-box">
+          <h4>Soft Delete Policy (30 Days)</h4>
+          <p>
+            When you initiate a deletion request, your account enters a <strong>30-day "Soft Delete" period</strong>. During this window, your data is preserved but your profile is immediately deactivated.
+          </p>
+        </div>
+        <p>To delete your account, follow these steps in the app:</p>
+        <ul>
+          <li>Open <strong>Jaap Sadhana</strong> and go to the <strong>Profile</strong> tab.</li>
+          <li>Tap on <strong>Settings</strong> (gear icon).</li>
+          <li>Select <strong>Delete Account</strong> at the bottom of the list.</li>
+          <li>Confirm your choice in the security prompt.</li>
+        </ul>
+      </section>
+
+      <section id="restoration" class="card">
+        <h2>Account Restoration</h2>
+        <p>
+          We understand that spiritual journeys can have pauses. If you change your mind within the <strong>30-day restoration window</strong>, you can easily recover your account.
+        </p>
+        <ul>
+          <li><strong>How to Restore:</strong> Simply log back into the app using your original authentication method (Google or Apple Sign-In).</li>
+          <li><strong>Data Recovery:</strong> All your streaks, logs, and group memberships will be instantly restored as if you never left.</li>
+        </ul>
+        <p style="margin-top: 24px; color: var(--text-muted);">
+          <em>Note: After the 30-day period expires, the restoration window closes and the data becomes permanently inaccessible.</em>
+        </p>
+      </section>
+
+      <section id="data-impact" class="card">
+        <h2>What Data is Removed?</h2>
+        <p>Upon final deletion (after 30 days), the following information is permanently purged:</p>
+        <ul>
+          <li>Your personal profile (Name, Email, Profile Photo).</li>
+          <li>Comprehensive Jaap logs and Sadhana history.</li>
+          <li>Community rankings and Leaderboard presence.</li>
+          <li>Group memberships and shared spiritual contributions.</li>
+          <li>Calculated milestones and earned badges.</li>
+        </ul>
+      </section>
+
+      <section id="support" class="card">
+        <h2>Need Assistance?</h2>
+        <p>
+          If you encounter any issues with the deletion process or have questions regarding your data, please contact our support team:
+        </p>
+        <p style="color: var(--primary); font-weight: 600; font-size: 18px;">
+          Email: dev2applitz2020@gmail.com
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Jaap Sadhana. Built for the modern seeker.</p>
+      <p style="font-size: 12px; margin-top: 10px; opacity: 0.7;">
+        Your devotion is eternal; your data is yours to command.
+      </p>
+    </footer>
+
+    <script>
+      // 🕉️ FLOAT-UP OBSERVER
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+      document.querySelectorAll("section").forEach(s => observer.observe(s));
+
+      // ✨ PARTICLES (Simple version for cleaner code)
+      const canvas = document.getElementById("particles");
+      const ctx = canvas.getContext("2d");
+      let particles = [];
+      const omBuffer = document.createElement("canvas");
+      const bCtx = omBuffer.getContext("2d");
+      omBuffer.width = 100; omBuffer.height = 100;
+
+      function createOmBuffer() {
+        bCtx.clearRect(0, 0, 100, 100);
+        bCtx.font = '900 80px "Inter"'; bCtx.textAlign = "center"; bCtx.textBaseline = "middle";
+        const grad = bCtx.createLinearGradient(0, 0, 100, 100);
+        grad.addColorStop(0, "#fde047"); grad.addColorStop(0.5, "#eab308"); grad.addColorStop(1, "#854d0e");
+        bCtx.fillStyle = grad; bCtx.shadowColor = "rgba(234, 179, 8, 0.5)"; bCtx.shadowBlur = 10;
+        bCtx.fillText("ॐ", 50, 55);
+      }
+
+      function resize() {
+        if (!canvas) return;
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        createOmBuffer();
+      }
+      window.addEventListener("resize", resize);
+      resize();
+
+      class Particle {
+        constructor() { this.reset(); }
+        reset() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 30 + 30;
+          this.speedY = Math.random() * -0.4 - 0.1;
+          this.opacity = Math.random() * 0.4 + 0.1;
+        }
+        update() {
+          this.y += this.speedY;
+          if (this.y < -60) this.reset();
+        }
+        draw() {
+          ctx.save();
+          ctx.globalAlpha = this.opacity;
+          ctx.drawImage(omBuffer, this.x, this.y, this.size, this.size);
+          ctx.restore();
+        }
+      }
+
+      for (let i = 0; i < 20; i++) particles.push(new Particle());
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    </script>
+  </body>
+</html>
